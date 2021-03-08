@@ -1,0 +1,49 @@
+---
+- hosts: all
+  become: true
+
+  tasks:
+    
+    # User account configuration.
+    - name: Add a deployment user.
+      user:
+        name: johndoe
+        state: present
+
+    # Disable root login and use `sudo`.
+    - name: Add sudo rights for deployment user.
+      lineinfile:
+        dest: /etc/sudoers
+        regexp: '^johndoe'
+        line: 'johndoe ALL=(ALL) NOPASSWD: ALL'
+        state: present
+        validate: 'visudo -cf %s'
+
+    # Remove unused software, open only required ports.
+    - name: Remove unused packages.
+      package:
+        name:
+          - nano
+          - sendmail
+        state: absent
+
+    # File permissions.
+    - name: Configure the permissions for the messages log.
+      file:
+        path: /var/log/messages
+        owner: root
+        group: root
+        mode: 0600
+
+   
+    - name: Install fail2ban (Debian).
+      apt:
+        name: fail2ban
+        state: present
+      when: ansible_os_family == 'Debian'
+
+    - name: Ensure fail2ban is running and enabled on boot.
+      service:
+        name: fail2ban
+        state: started
+        enabled: yes
