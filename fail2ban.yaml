@@ -27,14 +27,7 @@
           - sendmail
         state: absent
 
-    # File permissions.
-    - name: Configure the permissions for the messages log.
-      file:
-        path: /var/log/messages
-        owner: root
-        group: root
-        mode: 0600
-
+   
    
     - name: Install fail2ban (Debian).
       apt:
