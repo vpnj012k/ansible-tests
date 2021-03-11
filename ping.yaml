@@ -1,9 +1,12 @@
 ---
 - hosts: all
-  become: true
+ # become: true
 
   tasks:
     
+    # ping hosts
+    - name: ping hosts
+      ping:     
     # User account configuration.
     - name: Add a deployment user.
       user:
@@ -19,7 +22,7 @@
         state: present
         validate: 'visudo -cf %s'
 
-    # Remove unused software, open only required ports.
+    # Remove unused software...
     - name: Remove unused packages.
       package:
         name:
@@ -27,16 +30,9 @@
           - sendmail
         state: absent
 
-   
-   
-    - name: Install fail2ban (Debian).
+      
+    - name: Install busybox (Debian).
       apt:
-        name: fail2ban
+        name: busybox
         state: present
       when: ansible_os_family == 'Debian'
-
-    - name: Ensure fail2ban is running and enabled on boot.
-      service:
-        name: fail2ban
-        state: started
-        enabled: yes
