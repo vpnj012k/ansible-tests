@@ -14,7 +14,8 @@
         packages:
            - openjdk-8-jdk
            
-     - name: Install Maven
-       apt:
-         name: Maven
-         state: present
+          
+    - name: Install Maven
+      apt:
+        name: Maven
+        state: present
