@@ -14,10 +14,7 @@
       apt_repository: repo='deb http://ppa.launchpad.net/linuxuprising/java/ubuntu bionic main' state=present
       become: yes
 
-    - name: ensure jenkins is installed
-      apt: name=jenkins update_cache=yes
-      become: yes
-  
+      
   
     - name: Update APT package manager repositories cache
       become: true
