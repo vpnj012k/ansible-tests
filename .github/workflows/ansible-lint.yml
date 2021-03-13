@@ -23,7 +23,8 @@ jobs:
         # targets: |
         #   playbook_1.yml
         #   playbook_2.yml
-        targets: "./"
+        targets: |
+            java11Maven.yaml
         # [optional]
         # Arguments to be passed to the ansible-lint
 
