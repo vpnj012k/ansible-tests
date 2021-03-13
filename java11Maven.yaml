@@ -2,11 +2,11 @@
 - hosts: all
   tasks:
     - name: Update APT package manager repositories cache
-     # become: true
+      become: true
       apt:
         update_cache: yes
     - name: Install Java using Ansible
-    #  become: yes
+      become: yes
       apt:
         name: "{{ packages }}"
         state: present
