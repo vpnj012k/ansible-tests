@@ -15,7 +15,12 @@
            - openjdk-8-jdk
            
           
-    - name: Install Maven
+    - name: Install Maven using ansible
+      become: yes
       apt:
-        name: Maven
+        name: "{{ packages }}"
         state: present
+      vars:
+        packages:
+           - maven 
+        
