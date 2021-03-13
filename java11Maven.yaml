@@ -1,18 +1,20 @@
 ---
-
 - hosts: all
   tasks:
-   
-      
-   - name: Update APT package manager repositories cache
-      become: true
+    - name: Update APT package manager repositories cache
+     # become: true
       apt:
         update_cache: yes
     - name: Install Java using Ansible
-      become: yes
+    #  become: yes
       apt:
         name: "{{ packages }}"
         state: present
       vars:
         packages:
            - openjdk-8-jdk
+           
+     - name: Install Maven
+       apt:
+         name: Maven
+         state: present
