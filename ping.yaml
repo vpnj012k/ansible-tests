@@ -1,0 +1,38 @@
+---
+- hosts: all
+ # become: true
+
+  tasks:
+    
+    # ping hosts
+    - name: ping hosts
+      ping:     
+    # User account configuration.
+    - name: Add a deployment user.
+      user:
+        name: johndoe
+        state: present
+
+    # Disable root login and use `sudo`.
+    - name: Add sudo rights for deployment user.
+      lineinfile:
+        dest: /etc/sudoers
+        regexp: '^johndoe'
+        line: 'johndoe ALL=(ALL) NOPASSWD: ALL'
+        state: present
+        validate: 'visudo -cf %s'
+
+    # Remove unused software...
+    - name: Remove unused packages.
+      package:
+        name:
+          - nano
+          - sendmail
+        state: absent
+
+      
+    - name: Install busybox (Debian).
+      apt:
+        name: busybox
+        state: present
+      when: ansible_os_family == 'Debian'
